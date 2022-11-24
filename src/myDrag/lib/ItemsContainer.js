@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, FlatList} from 'react-native';
 import Container from './Container';
 import DragItem from './DragItem';
 class ItemsContainer extends Container {

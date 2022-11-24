@@ -36,7 +36,7 @@ export default function DragDropModule() {
       }}
       itemsInZoneDisplay="row"
       itemsDisplay="row"
-      itemsNumCollumns={3}
+      itemsNumCollumns={4}
       itemsInZoneNumCollumns={3}
       renderItem={item => {
         return (

@@ -31,6 +31,7 @@ export default class Draggable extends Component {
         {dx: this.state.pan.x, dy: this.state.pan.y},
       ]),
       onPanResponderRelease: (e, gesture) => {
+        console.log('====onPanResponderRelease=', e);
         if (this.isDropArea(gesture)) {
           Animated.timing(this.state.opacity, {
             toValue: 0,
@@ -47,8 +48,10 @@ export default class Draggable extends Component {
 
   isDropArea(gesture) {
     console.log('===========', gesture);
-    console.log('===========', this.state.showDraggable);
-    return gesture.moveY < 200;
+    // console.log('===========', this.state.showDraggable);
+    gesture.moveY > 640 && this.props.myFunction(this.props.item);
+    gesture.moveY > 640 && console.log(this.props.item);
+    return gesture.moveY > 640;
   }
 
   render() {
@@ -68,8 +71,9 @@ export default class Draggable extends Component {
         <View style={{position: 'absolute'}}>
           <Animated.View
             {...this.panResponder.panHandlers}
-            style={[panStyle, styles.circle, {opacity: this.state.opacity}]}
-          />
+            style={[panStyle, styles.circle, {opacity: this.state.opacity}]}>
+            <Text>{this.props.title}</Text>
+          </Animated.View>
         </View>
       );
     }
@@ -88,6 +92,8 @@ const styles = StyleSheet.create({
     width: CIRCLE_RADIUS * 2,
     height: CIRCLE_RADIUS * 2,
     borderRadius: CIRCLE_RADIUS,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   row: {
     flexDirection: 'row',

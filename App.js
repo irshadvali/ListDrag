@@ -11,6 +11,9 @@ import Home from './src/Home';
 import HomeTwo from './src/HomeTwo';
 import HomeThree from './src/HomeThree';
 import DragDropModule from './src/DragDropModule';
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 import {
   SafeAreaView,
   ScrollView,
@@ -23,8 +26,8 @@ import {
 
 const App = () => {
   return (
-    <SafeAreaView style={{width:'100%', height:'100%'}}>
-      <DragDropModule />
+    <SafeAreaView style={{width: '100%', height: '100%'}}>
+      <HomeThree />
     </SafeAreaView>
   );
 };
