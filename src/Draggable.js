@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, PanResponder, Animated} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  PanResponder,
+  Animated,
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native';
 
 export default class Draggable extends Component {
   constructor(props) {
@@ -14,6 +22,8 @@ export default class Draggable extends Component {
   }
 
   componentWillMount() {
+    console.log('===pan=', new Animated.ValueXY());
+    console.log('===opa=', new Animated.Value(1));
     this._val = {x: 0, y: 0};
     this.state.pan.addListener(value => (this._val = value));
 
@@ -43,21 +53,31 @@ export default class Draggable extends Component {
           );
         }
       },
+      onPanResponderReject: evt => {
+        console.info('=======onPanResponderReject', evt);
+      },
     });
   }
 
   isDropArea(gesture) {
-    console.log('===========', gesture);
-    // console.log('===========', this.state.showDraggable);
+    console.log('=========1==', gesture);
+    console.log('=========2==', this.state.showDraggable);
+    this.forceUpdate();
     gesture.moveY > 640 && this.props.myFunction(this.props.item);
     gesture.moveY > 640 && console.log(this.props.item);
     return gesture.moveY > 640;
   }
+  myViewHeight = () => {
+    console.log('======in drag');
+  };
 
   render() {
     return (
+      // eslint-disable-next-line react-native/no-inline-styles
       <View style={{width: '20%', alignItems: 'center'}}>
-        {this.renderDraggable()}
+        <TouchableOpacity onPress={this.myViewHeight}>
+          {this.renderDraggable()}
+        </TouchableOpacity>
       </View>
     );
   }

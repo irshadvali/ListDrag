@@ -12,6 +12,10 @@ import HomeTwo from './src/HomeTwo';
 import HomeThree from './src/HomeThree';
 import DragDropModule from './src/DragDropModule';
 import {LogBox} from 'react-native';
+import DDNS from './src/newfile/screen/DDNS';
+import DDND from './src/newfile/screen/DDND';
+import DDNH from './src/newfile/screen/DDNH';
+import HomeFour from './src/HomeFour';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 import {
@@ -27,7 +31,7 @@ import {
 const App = () => {
   return (
     <SafeAreaView style={{width: '100%', height: '100%'}}>
-      <HomeThree />
+      <HomeFour />
     </SafeAreaView>
   );
 };

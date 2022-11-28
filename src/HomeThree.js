@@ -7,9 +7,10 @@ import {
   PanResponder,
   Animated,
   TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 import Draggable from './Draggable';
-var datat = [
+var data = [
   {id: 1, mtext: 'A'},
   {id: 2, mtext: 'B'},
   {id: 3, mtext: 'C'},
@@ -26,20 +27,29 @@ export default class HomeThree extends Component {
 
     this.state = {
       newData: [],
+      myStyle: {backgroundColor: '#d00000'},
+      datat: data,
     };
   }
   myFunction = item => {
     console.log('===aaaaa==', item);
+    this.forceUpdate();
+    this.setState({
+      datat: data,
+    });
     this.setState({
       newData: [item],
     });
   };
+  myViewHeight = () => {
+    console.log('====lng==');
+  };
   renderItem = ({item}) => {
-    console.log('=======', item);
+    console.log('====item===', item);
     return (
       <View style={styles.item}>
         {/* <Text>{item.mtext}</Text> */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.myViewHeight}>
           <Draggable
             title={item.mtext}
             item={item}
@@ -51,7 +61,28 @@ export default class HomeThree extends Component {
   };
   componentDidMount() {
     console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+    this.setState({
+      datat: data,
+    });
   }
+  // shouldComponentUpdate(prevProps, prevState) {
+  //   // this.setState({
+  //   //   datat: data,
+  //   // });
+  //   // if (prevState.value !== this.state.value) {
+  //   //   return true;
+  //   // } else {
+  //   //   return false;
+  //   // }
+  // }
+  // componentDidUpdate(prevProps, prevState) {
+  //   this.setState({
+  //     datat: data,
+  //   });
+  //   // if (prevState.data !== this.state.data) {
+  //   //   // Now fetch the new data here.
+  //   // }
+  // }
   render() {
     console.log('===this.state.newData==', this.state.newData);
     return (
@@ -60,15 +91,25 @@ export default class HomeThree extends Component {
           <Text style={styles.text}>Drop them here!</Text>
         </View> */}
         {/* <View style={styles.ballContainer} /> */}
-        <View style={styles.dropZone}>
+        <View style={[styles.dropZone, this.state.myStyle]}>
           <FlatList
-            data={datat}
+            data={this.state.datat}
             horizontal
             renderItem={this.renderItem}
             keyExtractor={item => item.id}
             contentContainerStyle={{marginHorizontal: 10}}
           />
         </View>
+        {/* <View
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{
+            height: 100,
+            width: '100%',
+            backgroundColor: '#d00000',
+          }}>
+          <Text>second block</Text>
+        </View> */}
+        {/* </View> */}
         {/* <View style={styles.row}>
           <Draggable title="a" />
           <Draggable title="b" />
@@ -101,9 +142,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   dropZone: {
-    height: 100,
+    height: '100%',
     backgroundColor: '#00334d',
     marginTop: 10,
+    // zIndex: 100,
+    // position: 'absolute',
+    // top: 50,
   },
   text: {
     marginTop: 25,
