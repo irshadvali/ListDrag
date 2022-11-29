@@ -74,7 +74,7 @@ export default class Card extends Component {
   }
   //handling onPress action
   colorset(id) {
-    const cc = this.state.isDrag ? 'pink' : '#00BFA5';
+    const cc = this.state.isDrag ? 'rgba(52, 52, 52, 0.1)' : '#00BFA5';
     if (this.state.isDrag && !this.state.isFunctionCalled) {
       console.log('===================isFunctionCalled=');
       this.props?.colorFunc(cc);
@@ -120,7 +120,7 @@ export default class Card extends Component {
     };
   }
   render() {
-    let mycolor = this.state.isDrag ? 'pink' : 'blue';
+    let mycolor = this.state.isDrag ? 'rgba(255, 0, 0, 0.5);' : 'blue';
     return (
       // eslint-disable-next-line react-native/no-inline-styles
       <View
