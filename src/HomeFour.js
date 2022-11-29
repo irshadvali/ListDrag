@@ -103,7 +103,6 @@ export default class HomeFour extends Component {
   };
   renderItem = (item, index) => {
     // if (index === 0) {
-    console.log('===', item.key);
     return (
       <TouchableOpacity
         // eslint-disable-next-line react-native/no-inline-styles
@@ -119,7 +118,6 @@ export default class HomeFour extends Component {
           nextPage={this.nextPage}
           itemColor={this.state.itemColor}
           colorFunc={this.colorFunc}
-          keyExtractor={(item, index) => String(item.id)}
         />
       </TouchableOpacity>
     );
@@ -159,6 +157,7 @@ export default class HomeFour extends Component {
             {key: 'Perl', id: 100},
           ]}
           numColumns={2}
+          keyExtractor={(item, index) => String(item.id)}
           // eslint-disable-next-line react-native/no-inline-styles
           contentContainerStyle={{
             justifyContent: 'center',
