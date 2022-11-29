@@ -52,6 +52,9 @@ export default class Draggable extends Component {
             }),
           );
         }
+        Animated.spring(this.state.pan, {
+          toValue: {x: 0, y: 0},
+        }).start();
       },
       onPanResponderReject: evt => {
         console.info('=======onPanResponderReject', evt);
@@ -88,10 +91,15 @@ export default class Draggable extends Component {
     };
     if (this.state.showDraggable) {
       return (
-        <View style={{position: 'absolute'}}>
+        <View style={{zIndex: 51}}>
           <Animated.View
             {...this.panResponder.panHandlers}
-            style={[panStyle, styles.circle, {opacity: this.state.opacity}]}>
+            style={[
+              panStyle,
+              styles.circle,
+              {opacity: this.state.opacity},
+              {zIndex: 50},
+            ]}>
             <Text>{this.props.title}</Text>
           </Animated.View>
         </View>

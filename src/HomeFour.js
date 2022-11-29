@@ -8,13 +8,18 @@ import {
   Alert,
   PanResponder,
   Animated,
+  TouchableOpacity,
 } from 'react-native';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 import {elastic} from 'react-native/Libraries/Animated/Easing';
 import Card from './Card';
-
+//import { createStackNavigator } from 'react-navigation';
 export default class HomeFour extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      itemColor: '#00BFA5',
+    };
     const position = new Animated.ValueXY();
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -83,10 +88,41 @@ export default class HomeFour extends Component {
       ...this.position.getLayout(),
     };
   }
+  //this.props.navigation.navigate('NextPage', {});
+  nextPage = item => {
+    this.props.navigation.navigate('NextPage', {});
+  };
+
+  colorFunc = item => {
+    // let navigation = useNavigation();
+    console.log('=====colorFunc==', item);
+    this.setState({
+      itemColor: item,
+    });
+
+  };
   renderItem = (item, index) => {
     // if (index === 0) {
     console.log('===', item.key);
-    return <Card title={item.key} item={item} itemid={item.id} />;
+    return (
+      <TouchableOpacity
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{width: '50%'}}
+        onPress={() => {
+          console.log('==========click');
+        }}>
+        <Card
+          title={item.key}
+          item={item}
+          itemid={item.id}
+          itemIndex={index}
+          nextPage={this.nextPage}
+          itemColor={this.state.itemColor}
+          colorFunc={this.colorFunc}
+          keyExtractor={(item, index) => String(item.id)}
+        />
+      </TouchableOpacity>
+    );
   };
 
   render() {
@@ -97,6 +133,7 @@ export default class HomeFour extends Component {
         }}
         style={styles.container}>
         <FlatList
+          // scrollEnabled={false}
           data={[
             {key: 'Android', id: 1},
             {key: 'iOS', id: 1},

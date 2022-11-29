@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   dropZone: {
-    height: '100%',
+    height: 100,
     backgroundColor: '#00334d',
     marginTop: 10,
     // zIndex: 100,
