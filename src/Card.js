@@ -12,15 +12,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-var colora = '#00BFA5';
 export default class Card extends Component {
   constructor(props) {
     super(props);
     const position = new Animated.ValueXY();
-    // bgcolor: '#00BFA5';
-    // this.state({
-    //   bgcolor: '#00BFA5',
-    // });
     this.state = {
       bgcolor: '#00BFA5',
       zIndex: 0,
@@ -32,7 +27,6 @@ export default class Card extends Component {
       onStartShouldSetPanResponder: () => true,
       // onMoveShouldSetPanResponder: () => false,
       onMoveShouldSetPanResponder: (e, gestureState) => {
-        console.log('================gestureState==', gestureState.dx);
         Animated.timing(this.position, {
           toValue: 0,
           duration: 1000,
@@ -48,10 +42,9 @@ export default class Card extends Component {
           dragId: this.props.itemid,
           isDrag: true,
         });
-        console.log('=====onPanResponderGrant===', this.props.itemid);
       },
       onPanResponderMove: (e, gesture) => {
-        this.colorset(this.props.itemid);
+        this.colorset(this.props.itemid, gesture.moveY);
         position.setValue({x: gesture.dx, y: gesture.dy});
         this.setState({
           isDrag: true,
@@ -65,19 +58,14 @@ export default class Card extends Component {
         console.log('onPanResponderReject');
         console.log(gesture);
       },
-      onPress: (e, gesture) => {
-        console.log('========onPress');
-        console.log(gesture);
-      },
     });
     this.position = position;
   }
   //handling onPress action
-  colorset(id) {
+  colorset(id, y) {
     const cc = this.state.isDrag ? 'rgba(52, 52, 52, 0.1)' : '#00BFA5';
     if (this.state.isDrag && !this.state.isFunctionCalled) {
-      console.log('===================isFunctionCalled=');
-      this.props?.colorFunc(cc);
+      this.props?.colorFunc(cc, y);
       this.setState({
         isFunctionCalled: true,
       });
@@ -85,7 +73,7 @@ export default class Card extends Component {
   }
 
   resetPosition(gesture) {
-    this.props?.colorFunc('#00BFA5');
+    this.props?.colorFunc('#00BFA5', gesture.moveX);
     this.setState({
       isFunctionCalled: false,
     });
@@ -99,14 +87,12 @@ export default class Card extends Component {
       gesture.moveX < 110 &&
       gesture.moveY < 120 &&
       this.props?.nextPage();
-    //console.log('====call function');
     Animated.spring(this.position, {
       toValue: {x: 0, y: 0},
     }).start();
     this.setState({
       bgcolor: '#00BFA5',
     });
-    colora = '#00BFA5';
     this.setState({
       bgcolor: '#00BFA5',
       dragId: -10001,
@@ -120,28 +106,22 @@ export default class Card extends Component {
     };
   }
   render() {
-    let mycolor = this.state.isDrag ? 'rgba(255, 0, 0, 0.5);' : 'blue';
     return (
       // eslint-disable-next-line react-native/no-inline-styles
-      <View
-        style={[
-          styles.container,
-          // eslint-disable-next-line react-native/no-inline-styles
-          // eslint-disable-next-line react-native/no-inline-styles
-          // {position: 'absolute', top: 0},
-        ]}>
+      <View style={styles.container}>
         {this.props.itemIndex === 0 ? (
-          <View style={[styles.container, {zIndex: 3}]}>
+          <View style={[styles.container]}>
             <View
-              style={[styles.gridbox, {backgroundColor: this.state?.bgcolor}]}>
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={[styles.gridbox, {backgroundColor: this.props.itemColor}]}>
               <Text style={styles.gridText}>{this.props.title}</Text>
             </View>
           </View>
         ) : (
           <View>
-            {/* <TouchableOpacity activeOpacity={10}> */}
             {this.state.dragId === this.props.itemid ? (
-              <View style={styles.container}>
+              // eslint-disable-next-line react-native/no-inline-styles
+              <View style={[styles.container]}>
                 <Animated.View
                   {...this.panResponder.panHandlers}
                   // eslint-disable-next-line no-undef
@@ -149,16 +129,11 @@ export default class Card extends Component {
                     styles.gridbox,
                     // eslint-disable-next-line react-native/no-inline-styles
                     {
-                      zIndex: 3,
-                    },
-                    // eslint-disable-next-line react-native/no-inline-styles
-                    {
-                      backgroundColor: '#d00000',
+                      backgroundColor: 'rgba(52, 52, 52, 0.9)',
                     },
                     this.myStyle(),
                     // eslint-disable-next-line react-native/no-inline-styles
                   ]}>
-                  {/* {this.state.dragId === this.props.itemid && <Text>AA</Text>} */}
                   <Text style={styles.gridText}>{this.props.title}</Text>
                 </Animated.View>
               </View>
@@ -174,8 +149,6 @@ export default class Card extends Component {
                       backgroundColor: this.props.itemColor,
                     },
                     this.myStyle(),
-                    // eslint-disable-next-line react-native/no-inline-styles
-                    {zIndex: 0},
                   ]}>
                   <Text style={styles.gridText}>{this.props.title}</Text>
                 </Animated.View>

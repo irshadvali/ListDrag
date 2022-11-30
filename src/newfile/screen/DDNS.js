@@ -268,6 +268,12 @@ let alphaData = [
   {data: '.Net', id: 13},
   {data: 'Perl', id: 14},
   {data: 'Sap', id: 15},
+  {data: 'C++A', id: 16},
+  {data: 'ARuby', id: 17},
+  {data: 'ARails', id: 18},
+  {data: '.aNet', id: 19},
+  {data: 'APerl', id: 20},
+  {data: 'ASap', id: 21},
 ];
 // let first = 'A',
 //   last = 'L';

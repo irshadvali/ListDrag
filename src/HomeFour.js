@@ -19,51 +19,32 @@ export default class HomeFour extends Component {
     super(props);
     this.state = {
       itemColor: '#00BFA5',
+      showZIndex: false,
+      aaa: 0,
     };
-    const position = new Animated.ValueXY();
-    this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: (e, gesture) => {
-        // console.log(gesture);
-        position.setValue({x: gesture.dx, y: gesture.dy});
-      },
-      onPanResponderRelease: (e, gesture) => {
-        console.log('onPanResponderRelease');
-        console.log(gesture);
-      },
-      onPanResponderReject: (e, gesture) => {
-        console.log('onPanResponderReject');
-        console.log(gesture);
-      },
-      onPress: (e, gesture) => {
-        console.log('onPress');
-        console.log(gesture);
-      },
-    });
-    this.position = position;
+    // const position = new Animated.ValueXY();
+    // this.panResponder = PanResponder.create({
+    //   onStartShouldSetPanResponder: () => true,
+    //   onPanResponderMove: (e, gesture) => {
+    //     // console.log(gesture);
+    //     position.setValue({x: gesture.dx, y: gesture.dy});
+    //   },
+    //   onPanResponderRelease: (e, gesture) => {
+    //     console.log('onPanResponderRelease');
+    //     console.log(gesture);
+    //   },
+    //   onPanResponderReject: (e, gesture) => {
+    //     console.log('onPanResponderReject');
+    //     console.log(gesture);
+    //   },
+    //   onPress: (e, gesture) => {
+    //     console.log('onPress');
+    //     console.log(gesture);
+    //   },
+    // });
+    // this.position = position;
   }
-  renderSeparator = () => {
-    return (
-      <View
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{
-          height: 1,
-          width: '100%',
-          backgroundColor: '#000',
-        }}
-      />
-    );
-  };
-  componentDidMount() {
-    this.myComponent.measure((fx, fy, width, height, px, py) => {
-      console.log('====Component width is: ' + width);
-      console.log('====Component height is: ' + height);
-      console.log('====X offset to frame: ' + fx);
-      console.log('====Y offset to frame: ' + fy);
-      console.log('====X offset to page: ' + px);
-      console.log('====Y offset to page: ' + py);
-    });
-  }
+
   //handling onPress action
   getListViewItem = item => {
     Alert.alert(item.key);
@@ -83,43 +64,50 @@ export default class HomeFour extends Component {
     );
   };
 
-  myStyle() {
-    return {
-      ...this.position.getLayout(),
-    };
-  }
-  //this.props.navigation.navigate('NextPage', {});
+  // myStyle() {
+  //   return {
+  //     ...this.position.getLayout(),
+  //   };
+  // }
   nextPage = item => {
     this.props.navigation.navigate('NextPage', {});
   };
 
-  colorFunc = item => {
-    // let navigation = useNavigation();
-    console.log('=====colorFunc==', item);
+  colorFunc = (item, y) => {
+    // y > 140 && this.flatListRef.scrollToIndex({animated: true, index: 0});
+
     this.setState({
       itemColor: item,
     });
+    item === '#00BFA5'
+      ? this.setState({
+          showZIndex: false,
+        })
+      : this.setState({
+          showZIndex: true,
+          scrollToIndex: 0,
+        });
+  };
 
+  changeIndex = () => {
+    console.log('clicik', this.state.aaa);
+    this.setState({
+      aaa: 10,
+    });
+    // this.flatListRef.scrollToIndex({animated: true, index: 10});
   };
   renderItem = (item, index) => {
-    // if (index === 0) {
     return (
-      <TouchableOpacity
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{width: '50%'}}
-        onPress={() => {
-          console.log('==========click');
-        }}>
-        <Card
-          title={item.key}
-          item={item}
-          itemid={item.id}
-          itemIndex={index}
-          nextPage={this.nextPage}
-          itemColor={this.state.itemColor}
-          colorFunc={this.colorFunc}
-        />
-      </TouchableOpacity>
+      <Card
+        title={item.key}
+        item={item}
+        itemid={item.id}
+        itemIndex={index}
+        nextPage={this.nextPage}
+        itemColor={this.state.itemColor}
+        colorFunc={this.colorFunc}
+        mzIndex={700}
+      />
     );
   };
 
@@ -130,41 +118,53 @@ export default class HomeFour extends Component {
           this.myComponent = view;
         }}
         style={styles.container}>
-        <FlatList
-          // scrollEnabled={false}
-          data={[
-            {key: 'Android', id: 1},
-            {key: 'iOS', id: 1},
-            {key: 'Java', id: 1},
-            {key: 'Swift', id: 10},
-            {key: 'Php', id: 11},
-            {key: 'Hadoop', id: 12},
-            {key: 'Sap', id: 13},
-            {key: 'Python', id: 14},
-            {key: 'Ajax', id: 15},
-            {key: 'C++', id: 16},
-            {key: 'Ruby', id: 17},
-            {key: 'Rails', id: 18},
-            {key: '.Net', id: 19},
-            {key: 'Perl', id: 21},
-            {key: 'Sap', id: 31},
-            {key: 'Python', id: 41},
-            {key: 'Ajax', id: 51},
-            {key: 'C++', id: 61},
-            {key: 'Ruby', id: 71},
-            {key: 'Rails', id: 81},
-            {key: '.Net', id: 91},
-            {key: 'Perl', id: 100},
-          ]}
-          numColumns={2}
-          keyExtractor={(item, index) => String(item.id)}
-          // eslint-disable-next-line react-native/no-inline-styles
-          contentContainerStyle={{
-            justifyContent: 'center',
-            alignContent: 'center',
-          }}
-          renderItem={({item, index}) => this.renderItem(item, index)}
-        />
+        {this.state.showZIndex && (
+          <View style={styles.gridbox}>
+            <Text style={styles.gridText}> Android</Text>
+          </View>
+        )}
+
+        <View>
+          <FlatList
+            // scrollEnabled={false}
+            data={[
+              {key: 'Android', id: 1},
+              {key: 'iOS', id: 1},
+              {key: 'Java', id: 1},
+              {key: 'Swift', id: 10},
+              {key: 'Php', id: 11},
+              {key: 'Hadoop', id: 12},
+              {key: 'Sap', id: 13},
+              {key: 'Python', id: 14},
+              {key: 'Ajax', id: 15},
+              {key: 'C++', id: 16},
+              {key: 'Ruby', id: 17},
+              {key: 'Rails', id: 18},
+              {key: '.Net', id: 19},
+              {key: 'Perl', id: 21},
+              {key: 'Sap', id: 31},
+              {key: 'Python', id: 41},
+              {key: 'Ajax', id: 51},
+              {key: 'C++', id: 61},
+              {key: 'Ruby', id: 71},
+              {key: 'Rails', id: 81},
+              {key: '.Net', id: 91},
+              {key: 'Perl', id: 100},
+            ]}
+            numColumns={2}
+            keyExtractor={(item, index) => String(item.id)}
+            // eslint-disable-next-line react-native/no-inline-styles
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+            renderItem={({item, index}) => this.renderItem(item, index)}
+            // initialScrollIndex={this.state.aaa}
+            // ref={ref => {
+            //   this.flatListRef = ref;
+            // }}
+          />
+        </View>
       </View>
     );
   }
@@ -187,9 +187,14 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 125,
     margin: 2,
-    backgroundColor: '#00BFA5',
+    backgroundColor: 'rgba(52, 52, 52, 0.9)',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    top: 22,
+    left: 22,
+    zIndex: 5,
+    width: 150,
   },
 
   gridText: {
