@@ -46,23 +46,23 @@ export default class HomeFour extends Component {
   }
 
   //handling onPress action
-  getListViewItem = item => {
-    Alert.alert(item.key);
-  };
+  // getListViewItem = item => {
+  //   Alert.alert(item.key);
+  // };
 
-  cardView = item => {
-    return (
-      <View
-        // {...this.panResponder.panHandlers}
-        style={styles.gridbox}>
-        <Text
-          style={styles.gridText}
-          onPress={this.getListViewItem.bind(this, item)}>
-          {item.key}
-        </Text>
-      </View>
-    );
-  };
+  // cardView = item => {
+  //   return (
+  //     <View
+  //       // {...this.panResponder.panHandlers}
+  //       style={styles.gridbox}>
+  //       <Text
+  //         style={styles.gridText}
+  //         onPress={this.getListViewItem.bind(this, item)}>
+  //         {item.key}
+  //       </Text>
+  //     </View>
+  //   );
+  // };
 
   // myStyle() {
   //   return {
