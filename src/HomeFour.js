@@ -9,11 +9,14 @@ import {
   PanResponder,
   Animated,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import {elastic} from 'react-native/Libraries/Animated/Easing';
 import Card from './Card';
 //import { createStackNavigator } from 'react-navigation';
+import TextTicker from 'react-native-text-ticker';
+var dataAA = [];
 export default class HomeFour extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +24,8 @@ export default class HomeFour extends Component {
       itemColor: '#00BFA5',
       showZIndex: false,
       aaa: 0,
+      myArraay: [],
+      hashmap: new Map(),
     };
     // const position = new Animated.ValueXY();
     // this.panResponder = PanResponder.create({
@@ -111,13 +116,46 @@ export default class HomeFour extends Component {
     );
   };
 
+  checkPr = async () => {
+    const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Array of ids
+    const responses = await Promise.all(
+      ids.map(async id => {
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/posts/${id}`,
+        ); // Send request for each id
+        let resss = await res.json();
+        let obj = {id: resss.id, name: resss.title};
+        return obj;
+      }),
+    );
+    console.log('===============responses=', responses);
+  };
+
   render() {
+    console.log(this.state.myArraay);
     return (
       <View
         ref={view => {
           this.myComponent = view;
         }}
         style={styles.container}>
+        <Button
+          title="click"
+          onPress={() => {
+            this.checkPr();
+          }}
+        />
+        <View style={{width: 50}}>
+          <TextTicker
+            style={{fontSize: 12, color: 'red'}}
+            duration={7000}
+            loop
+            bounce
+            repeatSpacer={1}
+            marqueeDelay={10}>
+            Super long piece of text is long.
+          </TextTicker>
+        </View>
         {this.state.showZIndex && (
           <View style={styles.gridbox}>
             <Text style={styles.gridText}> Android</Text>
@@ -200,5 +238,30 @@ const styles = StyleSheet.create({
   gridText: {
     fontSize: 24,
     color: 'white',
+  },
+  scrolling1: {
+    marginVertical: 10,
+  },
+  scrolling2: {
+    backgroundColor: 'red',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  welcome: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  button: {
+    margin: 20,
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
   },
 });

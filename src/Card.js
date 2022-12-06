@@ -10,8 +10,9 @@ import {
   Animated,
   Easing,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
-
+const {height, width} = Dimensions.get('window');
 export default class Card extends Component {
   constructor(props) {
     super(props);
@@ -73,6 +74,10 @@ export default class Card extends Component {
   }
 
   resetPosition(gesture) {
+    console.log(gesture.moveY, '======== gesture.moveY===', gesture.y0);
+    // console.log('=============height, width=', height, width);
+    // console.log('=============gesture.x0, gesture.y0=', gesture.x0, gesture.y0);
+    // console.log('=============position=', this.position);
     this.props?.colorFunc('#00BFA5', gesture.moveX);
     this.setState({
       isFunctionCalled: false,
