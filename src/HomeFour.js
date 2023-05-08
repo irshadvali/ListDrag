@@ -129,6 +129,9 @@ export default class HomeFour extends Component {
       }),
     );
     console.log('===============responses=', responses);
+    this.setState({
+      myArraay: responses,
+    });
   };
 
   render() {

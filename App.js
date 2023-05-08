@@ -21,6 +21,7 @@ import ToastExample from './src/ToastExample';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import Toast from './src/ToastFile/Componet/Toast';
+import MyRadioButton from './src/MyRadioButton';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 import {
@@ -34,7 +35,7 @@ import {
 } from 'react-native';
 const AppNavigator = createStackNavigator({
   HomeFour: {
-    screen: ToastExample,
+    screen: MyRadioButton,
   },
   NextPage: {
     screen: NextPage,
